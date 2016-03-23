@@ -20,6 +20,12 @@ hs_err_pid*
 .idea/vcs.xml
 .idea/jsLibraryMappings.xml
 
+/.idea
+
+.DS_Store
+.AppleDouble
+.LSOverride
+
 # Sensitive or high-churn files:
 .idea/dataSources.ids
 .idea/dataSources.xml
