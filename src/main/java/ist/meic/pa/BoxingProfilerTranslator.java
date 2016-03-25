@@ -3,33 +3,28 @@ package ist.meic.pa;
 import javassist.*;
 import javassist.expr.*;
 
-import javax.swing.*;
-import java.io.*;
-import java.lang.reflect.*;
 import java.util.ArrayList;
 
 class BoxingProfilerTranslator implements Translator {
-    private ArrayList<String> boxingMethods = new ArrayList<String>();
-    private ArrayList<String> unboxingMethods = new ArrayList<String>();
-
+    private ArrayList<String> targetMethods = new ArrayList<String>();
     public BoxingProfilerTranslator() {
-        boxingMethods.add("java.lang.Integer.valueOf");
-        boxingMethods.add("java.lang.Double.valueOf");
-        boxingMethods.add("java.lang.Long.valueOf");
-        boxingMethods.add("java.lang.Float.valueOf");
-        boxingMethods.add("java.lang.Short.valueOf");
-        boxingMethods.add("java.lang.Byte.valueOf");
-        boxingMethods.add("java.lang.Character.valueOf");
-        boxingMethods.add("java.lang.Boolean.valueOf");
+        targetMethods.add("java.lang.Integer.valueOf");
+        targetMethods.add("java.lang.Double.valueOf");
+        targetMethods.add("java.lang.Long.valueOf");
+        targetMethods.add("java.lang.Float.valueOf");
+        targetMethods.add("java.lang.Short.valueOf");
+        targetMethods.add("java.lang.Byte.valueOf");
+        targetMethods.add("java.lang.Character.valueOf");
+        targetMethods.add("java.lang.Boolean.valueOf");
 
-        unboxingMethods.add("java.lang.Integer.intValue");
-        unboxingMethods.add("java.lang.Double.doubleValue");
-        unboxingMethods.add("java.lang.Long.longValue");
-        unboxingMethods.add("java.lang.Float.floatValue");
-        unboxingMethods.add("java.lang.Short.shortValue");
-        unboxingMethods.add("java.lang.Byte.byteValue");
-        unboxingMethods.add("java.lang.Character.charValue");
-        unboxingMethods.add("java.lang.Boolean.booleanValue");
+        targetMethods.add("java.lang.Integer.intValue");
+        targetMethods.add("java.lang.Double.doubleValue");
+        targetMethods.add("java.lang.Long.longValue");
+        targetMethods.add("java.lang.Float.floatValue");
+        targetMethods.add("java.lang.Short.shortValue");
+        targetMethods.add("java.lang.Byte.byteValue");
+        targetMethods.add("java.lang.Character.charValue");
+        targetMethods.add("java.lang.Boolean.booleanValue");
     }
 
     public void start(ClassPool pool)
@@ -40,31 +35,29 @@ class BoxingProfilerTranslator implements Translator {
         profileBoxing(ctClass);
     }
     void profileBoxing(CtClass ctClass) throws NotFoundException, CannotCompileException {
-            final String unBoxTemplate = "{" +
-                                            "System.err.println(\"%s\" + \" unboxed <> \" + \"%s\");" +
+
+            final String template = "{" +
+                                            "ist.meic.pa.DataManager.getInstance().processEntry(\"%s\", \"%s\", \"%s\");" +
                                             "$_ = $proceed($$);" +
                                          "}";
-            final String boxTemplate = "{" +
-                                            "System.err.println(\"%s\" + \" boxed <> \" + \"%s\");" +
-                                            "$_ = $proceed($$);" +
-                                         "}";
+            final String finalize = "{" +
+                                        "System.err.println(ist.meic.pa.DataManager.getInstance().asString());" +
+                                        "}";
+
             for (CtBehavior ctBehavior : ctClass.getDeclaredBehaviors()) {
+                if (ctBehavior.getName().equals("main")) {
+                    ctBehavior.insertAfter(finalize, true);
+                }
                 ctBehavior.instrument(new ExprEditor() {
                     public void edit(MethodCall methodCall) throws CannotCompileException {
                         String fullMethodName = methodCall.getClassName() + "." + methodCall.getMethodName();
 
-                        if (unboxingMethods.contains(fullMethodName)) {
-                            String className =  methodCall.getClassName();
-                            String behaviorName = ctBehavior.getLongName();
-                            methodCall.replace(String.format(unBoxTemplate, behaviorName, className));
-                        }
-                        else if (boxingMethods.contains(fullMethodName)) {
-                            String className =  methodCall.getClassName();
-                            String behaviorName = ctBehavior.getLongName();
-                            methodCall.replace(String.format(boxTemplate, behaviorName, className));
+                        if (targetMethods.contains(fullMethodName)) {
+                            methodCall.replace(String.format(template, ctBehavior.getLongName(), methodCall.getMethodName(), methodCall.getClassName()));
                         }
                     }
                 });
+
             }
     }
 }
