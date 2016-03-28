@@ -21,7 +21,7 @@ hs_err_pid*
 .idea/jsLibraryMappings.xml
 
 /.idea
-
+/examples
 .DS_Store
 .AppleDouble
 .LSOverride

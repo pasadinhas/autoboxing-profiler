@@ -67,8 +67,16 @@ final public class DataManager {
 
     public String asString() {
         String output = "";
+        boolean first = true;
+        
         for (String key : data.keySet()) {
-            output += makePrintableEntry(key);
+            if (first) {
+               output += makePrintableEntry(key);
+               first = false;
+            }
+            else {
+                output +=  System.lineSeparator() + makePrintableEntry(key);
+            }
         }
 
         return output;
@@ -78,6 +86,6 @@ final public class DataManager {
         Integer value = data.get(key);
         String[] elements = key.split(" ");
 
-        return elements[0] + " " + elements [2] + " " + value + " " + elements[1] + System.lineSeparator();
+        return elements[0] + " " + elements [2] + " " + value + " " + elements[1];
     }
 }

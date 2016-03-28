@@ -27,9 +27,7 @@ class BoxingProfilerTranslator implements Translator {
         targetMethods.add("java.lang.Boolean.booleanValue");
     }
 
-    public void start(ClassPool pool)
-            throws NotFoundException, CannotCompileException {
-    }
+    public void start(ClassPool pool) throws NotFoundException, CannotCompileException { }
     public void onLoad(ClassPool pool, String className) throws NotFoundException, CannotCompileException {
         CtClass ctClass = pool.get(className);
         profileBoxing(ctClass);
