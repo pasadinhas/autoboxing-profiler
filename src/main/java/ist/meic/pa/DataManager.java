@@ -3,7 +3,6 @@ package ist.meic.pa;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.StringJoiner;
 
 final public class DataManager {
     private static DataManager instance = null;
@@ -41,14 +40,14 @@ final public class DataManager {
         return behaviourName + " " + className + " " + boxType;
     }
 
-    public String asString() {
-        StringJoiner joiner = new StringJoiner("\n");
-        
+    public String toString() {
+        String output = "";
+                
         for (Map.Entry<String, Integer> entry : data.entrySet()) {
-            joiner.add(makePrintableEntry(entry.getKey(), entry.getValue()));
+            output += makePrintableEntry(entry.getKey(), entry.getValue()) + System.lineSeparator();
         }
 
-        return joiner.toString();
+        return output;
     }
 
     private String makePrintableEntry(String key, Integer value) {

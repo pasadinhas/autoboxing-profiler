@@ -41,7 +41,7 @@ class BoxingProfilerTranslator implements Translator {
                                         "$_ = $proceed($$);" +
                                     "}";
                                     
-            final String finalize = "{ System.err.println(ist.meic.pa.DataManager.getInstance().asString()); }";
+            final String finalize = "{ System.err.print(ist.meic.pa.DataManager.getInstance()); }";
 
             for (CtBehavior ctBehavior : ctClass.getDeclaredBehaviors()) {
                 if (ctBehavior.getName().equals("main")) {
