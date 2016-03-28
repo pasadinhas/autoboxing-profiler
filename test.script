@@ -1,0 +1,38 @@
+echo Running Tests!
+
+java -cp boxingProfiler.jar:javassist.jar:examples:. ist.meic.pa.BoxingProfiler TestA &> examples/resultA.txt
+java -cp boxingProfiler.jar:javassist.jar:examples:. ist.meic.pa.BoxingProfiler TestB &> examples/resultB.txt
+java -cp boxingProfiler.jar:javassist.jar:examples:. ist.meic.pa.BoxingProfiler TestC &> examples/resultC.txt
+java -cp boxingProfiler.jar:javassist.jar:examples:. ist.meic.pa.BoxingProfiler TestD &> examples/resultD.txt
+java -cp boxingProfiler.jar:javassist.jar:examples:. ist.meic.pa.BoxingProfiler TestE &> examples/resultE.txt
+java -cp boxingProfiler.jar:javassist.jar:examples:. ist.meic.pa.BoxingProfiler TestF &> examples/resultF.txt
+
+echo Diffing A!
+echo -
+diff examples/outA.txt examples/resultA.txt
+echo
+
+echo Diffing B!
+echo -
+diff examples/outB.txt examples/resultB.txt
+echo
+
+echo Diffing C!
+echo -
+diff examples/outC.txt examples/resultC.txt
+echo
+
+echo Diffing D!
+echo -
+diff examples/outD.txt examples/resultD.txt
+echo
+
+echo Diffing E!
+echo -
+diff examples/outE.txt examples/resultE.txt
+echo
+
+echo Diffing F!
+echo -
+diff examples/outF.txt examples/resultF.txt
+echo

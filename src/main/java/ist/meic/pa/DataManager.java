@@ -54,10 +54,10 @@ final public class DataManager {
 
         String fullMethodName = className + "." + methodName;
 
-        if (boxingMethods.contains(fullMethodName)) {
+        if (fullMethodName.endsWith("Of")) {
             return behaviourName + " " + className + " " + "boxed";
         }
-        else if (unboxingMethods.contains(fullMethodName)) {
+        else if (fullMethodName.endsWith("Value")) {
             return behaviourName + " " + className + " " + "unboxed";
         }
         else {
@@ -83,9 +83,12 @@ final public class DataManager {
     }
 
     private String makePrintableEntry(String key) {
-        Integer value = data.get(key);
         String[] elements = key.split(" ");
+        Integer value = data.get(key);
+        String behaviourName = elements[0];
+        String className = elements[1];
+        String boxType = elements[2];
 
-        return elements[0] + " " + elements [2] + " " + value + " " + elements[1];
+        return behaviourName + " " + boxType + " " + value + " " + className;
     }
 }

@@ -21,12 +21,14 @@ hs_err_pid*
 .idea/jsLibraryMappings.xml
 
 /.idea
-/examples
 .DS_Store
 .AppleDouble
 .LSOverride
 
 *.iml
+
+#Tests
+examples/result*
 
 # Sensitive or high-churn files:
 .idea/dataSources.ids
