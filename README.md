@@ -5,7 +5,7 @@ Academic project for the Advanced Programming course @ IST
 $ ant
 
 ##To run:
-$ java -cp boxingProfiler.jar:javassist.jar:. ist.meic.pa.BoxingProfiler <ClassForProfiling>
+$ java -cp boxingProfiler.jar:javassist.jar:. ist.meic.pa.BoxingProfiler \<ClassForProfiling\>
 
 ##To test:
 $ sh test.script
