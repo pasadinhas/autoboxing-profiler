@@ -8,6 +8,4 @@ $ ant
 $ java -cp boxingProfiler.jar:javassist.jar:. ist.meic.pa.BoxingProfiler <ClassForProfiling>
 
 ##To test:
-$ source test.script
-
-(a diff of a blank line in tests A and E is normal)
+$ sh test.script
