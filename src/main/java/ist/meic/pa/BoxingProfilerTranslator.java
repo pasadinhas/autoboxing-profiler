@@ -34,8 +34,9 @@ class BoxingProfilerTranslator implements Translator {
         CtClass ctClass = pool.get(className);
         profileBoxing(ctClass);
     }
-    /* Profiles the boxing/unboxing of the specified class
-    */
+    /**
+     * Profiles the boxing/unboxing of the given class
+     */
     void profileBoxing(CtClass ctClass) throws NotFoundException, CannotCompileException {
 
             final String template = "{" +

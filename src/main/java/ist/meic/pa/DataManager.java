@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
-//This singleton class is responsible of storing and managing the data of the profiler
+/**
+ * This singleton class is responsible for storing and managing the data of the profiler.
+ */
 final public class DataManager {
     private static DataManager instance = null;
     private TreeMap<String, Integer> data = new TreeMap<String, Integer>();
@@ -13,8 +15,9 @@ final public class DataManager {
 
     }
 
-    /* Singleton instance getter
-    */
+    /** 
+     * Get the singleton instance
+     */
     public static DataManager getInstance() {
         if (instance == null) {
             instance = new DataManager();
@@ -23,9 +26,10 @@ final public class DataManager {
     }
 
 
-    /* Adds a new entry if it's the first box/unbox of the class in the speciefied behaviour, 
-    /* else it increments the counter
-    */
+    /** 
+     * Adds a new entry if it is the first box/unbox of its type in the speciefied behaviour, 
+     * else it increments the counter of ococcurrences.
+     */
     public void processEntry(String behaviourName, String methodName, String className) {
         String entryKey = makeKey(behaviourName, methodName, className);
 
@@ -38,8 +42,9 @@ final public class DataManager {
     }
 
 
-    /* Makes the key for a given entry, with the desired lexical order
-    */
+    /**
+     * Makes the key for a given entry, with the desired lexical order.
+     */
     private String makeKey(String behaviourName, String methodName, String className) {
 
         String fullMethodName = className + "." + methodName;
@@ -50,8 +55,9 @@ final public class DataManager {
         return behaviourName + " " + className + " " + boxType;
     }
 
-    /* Prints the data
-    */
+    /** 
+     * Returns a string that is the external representation of this singleton.
+     */
     public String toString() {
         String output = "";
                 
@@ -62,8 +68,9 @@ final public class DataManager {
         return output;
     }
 
-    /* Given a key and a value produces the output fitting the requirements
-    */
+    /** 
+     * Given a key and a value produces the external representation of an entry.
+     */
     private String makePrintableEntry(String key, Integer value) {
         String[] elements = key.split(" ");
         String behaviourName = elements[0];
