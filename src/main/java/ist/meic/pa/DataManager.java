@@ -28,7 +28,7 @@ final public class DataManager {
 
     /** 
      * Adds a new entry if it is the first box/unbox of its type in the speciefied behaviour, 
-     * else it increments the counter of ococcurrences.
+     * else it increments the counter of occurrences.
      */
     public void processEntry(String behaviourName, String methodName, String className) {
         String entryKey = makeKey(behaviourName, methodName, className);
@@ -43,7 +43,7 @@ final public class DataManager {
 
 
     /**
-     * Makes the key for a given entry, with the desired lexical order.
+     * Makes the key for a given entry, enforcing desired lexical order.
      */
     private String makeKey(String behaviourName, String methodName, String className) {
 
