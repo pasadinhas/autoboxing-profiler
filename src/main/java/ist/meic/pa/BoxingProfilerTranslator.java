@@ -34,6 +34,8 @@ class BoxingProfilerTranslator implements Translator {
         CtClass ctClass = pool.get(className);
         profileBoxing(ctClass);
     }
+    /* Profiles the boxing/unboxing of the specified class
+    */
     void profileBoxing(CtClass ctClass) throws NotFoundException, CannotCompileException {
 
             final String template = "{" +
@@ -50,6 +52,7 @@ class BoxingProfilerTranslator implements Translator {
                 ctBehavior.instrument(new ExprEditor() {
                     @Override
                     public void edit(MethodCall methodCall) throws CannotCompileException {
+                        // The full method name is needed to filter out things as Long.doubleValue
                         String fullMethodName = methodCall.getClassName() + "." + methodCall.getMethodName();
 
                         if (targetMethods.contains(fullMethodName)) {

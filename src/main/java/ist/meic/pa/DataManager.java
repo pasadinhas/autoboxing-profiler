@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
+//This singleton class is responsible of storing and managing the data of the profiler
 final public class DataManager {
     private static DataManager instance = null;
     private TreeMap<String, Integer> data = new TreeMap<String, Integer>();
@@ -12,6 +13,8 @@ final public class DataManager {
 
     }
 
+    /* Singleton instance getter
+    */
     public static DataManager getInstance() {
         if (instance == null) {
             instance = new DataManager();
@@ -19,6 +22,10 @@ final public class DataManager {
         return instance;
     }
 
+
+    /* Adds a new entry if it's the first box/unbox of the class in the speciefied behaviour, 
+    /* else it increments the counter
+    */
     public void processEntry(String behaviourName, String methodName, String className) {
         String entryKey = makeKey(behaviourName, methodName, className);
 
@@ -30,16 +37,21 @@ final public class DataManager {
         }
     }
 
+
+    /* Makes the key for a given entry, with the desired lexical order
+    */
     private String makeKey(String behaviourName, String methodName, String className) {
 
         String fullMethodName = className + "." + methodName;
 
-        // Boxing methods are called valueOf.
+        // Boxing methods are called valueOf; all others that get here are, by design, unboxing ones.
         String boxType = methodName.equals("valueOf") ? "boxed" : "unboxed";
 
         return behaviourName + " " + className + " " + boxType;
     }
 
+    /* Prints the data
+    */
     public String toString() {
         String output = "";
                 
@@ -50,6 +62,8 @@ final public class DataManager {
         return output;
     }
 
+    /* Given a key and a value produces the output fitting the requirements
+    */
     private String makePrintableEntry(String key, Integer value) {
         String[] elements = key.split(" ");
         String behaviourName = elements[0];
